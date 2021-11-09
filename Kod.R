@@ -1,6 +1,6 @@
 # Wczytywanie danych.
 
-setwd("C:/Users/user/Downloads/Data Mining/Projekt 2/projekt2") # Moja œcie¿ka do plików.
+setwd("C:/Users/user/Downloads/Data Mining/Projekt 2/projekt2") # Moja Å“cieÂ¿ka do plikÃ³w.
 
 ind_data <- read.table("individual_data.txt")
 
@@ -23,7 +23,7 @@ valid_labels <- read.table("validation_labels.txt")
 
 # 1 klasyfikator.
 
-# Najpierw robiê klasyfikacjê bez selekcji.
+# Najpierw robiÃª klasyfikacjÃª bez selekcji.
 
 train_set <- c(train_data, train_labels)
 
@@ -33,7 +33,7 @@ test_set <- c(test_data, valid_labels)
 
 test_set <- as.data.frame(test_set)
 
-# £¹czy³em zbiory, ¿eby czynniki by³y takie same, a nastêpnie indeksowa³em.
+# Â£Â¹czyÂ³em zbiory, Â¿eby czynniki byÂ³y takie same, a nastÃªpnie indeksowaÂ³em.
 
 zbior_zloczony <- rbind(train_set, test_set)
 
@@ -77,13 +77,13 @@ zbior_tren <- zbior_zloczony[idx_tren, ]
 
 zbior_test <- zbior_zloczony[-idx_tren, ]
 
-# Zrobiê selekcjê zmiennych funkcj¹ CMIM z pakietu "praznik".
+# ZrobiÃª selekcjÃª zmiennych funkcjÂ¹ CMIM z pakietu "praznik".
 
 library(praznik)
 
 y <- factor(ifelse(zbior_zloczony$poor == "Poor", 1, 0))
 
-# Wartoœci zmienner "poor" s¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
+# WartoÅ“ci zmienner "poor" sÂ¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
 
 CMIM(zbior_zloczony[,-344], Y = y,  k = 6) # Dla walidacyjnego otrzymane zmienne: cons_0111     cons_0901  geo_district     cons_0106     cons_0501 hld_nbcellpho
 # Dla testowego: cons_0901    cons_0106 geo_district    cons_0501    cons_0111    cons_0508
@@ -105,7 +105,7 @@ write.table(wynik2, 'wynik2.txt', append = FALSE, sep = "\n ", dec = ".",
 
 # 3 klasyfikator.
 
-# Sprawdzê t¹ sam¹ selekcjê z tym samym modelem, ale dla liczby zmiennych równej 12.
+# SprawdzÃª tÂ¹ samÂ¹ selekcjÃª z tym samym modelem, ale dla liczby zmiennych rÃ³wnej 12.
 
 train_set <- c(train_data, train_labels)
 
@@ -125,7 +125,7 @@ zbior_test <- zbior_zloczony[-idx_tren, ]
 
 y <- factor(ifelse(zbior_zloczony$poor == "Poor", 1, 0))
 
-# Wartoœci zmienner "poor" s¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
+# WartoÅ“ci zmienner "poor" sÂ¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
 
 CMIM(zbior_zloczony[,-344], Y = y,  k = 12) # Dla walidacyjnego: cons_0111     cons_0901  geo_district     cons_0106     cons_0501 hld_nbcellpho
 # cons_0401     cons_0801     cons_0508   hld_cooking     cons_1204     cons_1108 
@@ -141,16 +141,16 @@ wynik3 <- wynik3[, 2]
 mean(predykcje_ranFor==zbior_test$poor) # Dla walidacyjnego: 0.7523333
 # Dla testowego: 0.5
 
-# Wczytywanie do pliku (ten plik wys³a³em mailem).
+# Wczytywanie do pliku (ten plik wysÂ³aÂ³em mailem).
 write.table(wynik3, 'JZB.txt', append = FALSE, sep = "\n ", dec = ".",
             row.names = FALSE, col.names = FALSE)
 
-# Dla walidacyjnego: AUC = 0.840. Lepiej jest ni¿ w przypadku 6 zmiennych. AUC jest mniejsze tylko o 0,02 ni¿ w przypadku modelu pe³nego.
+# Dla walidacyjnego: AUC = 0.840. Lepiej jest niÂ¿ w przypadku 6 zmiennych. AUC jest mniejsze tylko o 0,02 niÂ¿ w przypadku modelu peÂ³nego.
 # Dla testowego: AUC = 
 
 # 4 klasyfikator.
 
-# Spróbujê teraz z³¹czyæ "zbior_zlaczony" z jakimiœ danymi indywidualnymi za pomoc¹ funkcji merge().
+# SprÃ³bujÃª teraz zÂ³Â¹czyÃ¦ "zbior_zlaczony" z jakimiÅ“ danymi indywidualnymi za pomocÂ¹ funkcji merge().
 
 ind_data_7kol <- ind_data[, 1:7]
 ind_data$ind_educ01
@@ -160,7 +160,7 @@ z_dan_ind <- inner_join(ind_data_7kol, zbior_zloczony, by = "hid")
 
 # Usuwam wiersze z brakami danych.
 
-sum(is.na(z_dan_ind[,(6:7)])) == sum(is.na(z_dan_ind)) # Zatem w kolumnach 6, 7 s¹ wszystkie braki danych.
+sum(is.na(z_dan_ind[,(6:7)])) == sum(is.na(z_dan_ind)) # Zatem w kolumnach 6, 7 sÂ¹ wszystkie braki danych.
 
 idx_6_NA <- which(is.na(z_dan_ind[,6]))
 
@@ -170,13 +170,13 @@ idx_7_NA <- which(is.na(z_dan_ind[, 7]))
 
 z_dan_ind <- z_dan_ind[-idx_7_NA, ]
 
-idx_test <- sample(1:nrow(z_dan_ind), 3000) # Chcê mieæ dok³adnie 3000 obserwacji w zbiorze testowym,
-# poniewa¿ tyle wartoœci otrzymanych z funkcji predict() trzeba mieæ, by aplikacja licz¹ca AUC dzia³a³a. 
+idx_test <- sample(1:nrow(z_dan_ind), 3000) # ChcÃª mieÃ¦ dokÂ³adnie 3000 obserwacji w zbiorze testowym,
+# poniewaÂ¿ tyle wartoÅ“ci otrzymanych z funkcji predict() trzeba mieÃ¦, by aplikacja liczÂ¹ca AUC dziaÂ³aÂ³a. 
 zbior_test <- z_dan_ind[idx_test, ]
 zbior_tren <- z_dan_ind[-idx_tren, ]
 
 y <- factor(ifelse(z_dan_ind$poor == "Poor", 1, 0))
-# 344 kolumna z z³¹czonego zbioru jest kolumn¹ z wartoœciami zmiennej "poor".
+# 344 kolumna z zÂ³Â¹czonego zbioru jest kolumnÂ¹ z wartoÅ“ciami zmiennej "poor".
 z_dan_ind[, ncol(z_dan_ind)] # tutaj jest zmienna "poor"
 CMIM(z_dan_ind[,-ncol(z_dan_ind)], Y = y,  k = 6)  # Dla walidacyjnego: cons_0111  geo_district     cons_0901 hld_nbcellpho     cons_0106     cons_0501 
 # Dla testowego: cons_0801  geo_district     cons_0111     cons_0106 hld_nbcellpho     cons_0508 
@@ -195,7 +195,7 @@ mean(predykcje_ranFor==zbior_test$poor) # Dla walidacyjnego: 0.754
 write.table(wynik4, 'wynik4.txt', append = FALSE, sep = "\n ", dec = ".",
             row.names = FALSE, col.names = FALSE)
 
-# AUC ma³e (wynosi 0.495) (dla walidacyjnego)
+# AUC maÂ³e (wynosi 0.495) (dla walidacyjnego)
 # Dla testowego: AUC = 
 
 # 5 klasyfikator.
@@ -238,7 +238,7 @@ write.table(wynik5, 'wynik5.txt', append = FALSE, sep = "\n ", dec = ".",
 
 # 6 klasyfikator.
 
-# Przetestujê bagging z selekcj¹ zmiennych (wezmê 12 zmiennych).
+# PrzetestujÃª bagging z selekcjÂ¹ zmiennych (wezmÃª 12 zmiennych).
 
 train_set <- c(train_data, train_labels)
 
@@ -258,7 +258,7 @@ zbior_test <- zbior_zloczony[-idx_tren, ]
 
 y <- factor(ifelse(zbior_zloczony$poor == "Poor", 1, 0))
 
-# Wartoœci zmienner "poor" s¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
+# WartoÅ“ci zmienner "poor" sÂ¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
 
 JMIM(zbior_zloczony[,-344], Y = y,  k = 12) # Dla walidacyjnego: cons_0111     cons_0901  geo_district     cons_0106     cons_0501 hld_nbcellpho
 # cons_0801     cons_0401   hld_cooking     cons_1204 hld_headsleep     cons_0803
@@ -284,15 +284,15 @@ write.table(wynik6, 'wynik6.txt', append = FALSE, sep = "\n ", dec = ".",
 # AUC = 0,82 (dla walidacyjnego)
 # Dla testowego: AUC = 
 
-# Wartoœæ AUC jest mniejsza od AUC dla baggingu z modelem pe³nym tylko 0,15.
-# Ten klasyfikator jest wiêc lepszy, poniewa¿ dzia³a znacznie szybciej ni¿ klasyfikator 
-# z modelem pe³nym ze wzglêdu na niewielk¹ ró¿nicê w wartoœci AUC.
+# WartoÅ“Ã¦ AUC jest mniejsza od AUC dla baggingu z modelem peÂ³nym tylko 0,15.
+# Ten klasyfikator jest wiÃªc lepszy, poniewaÂ¿ dziaÂ³a znacznie szybciej niÂ¿ klasyfikator 
+# z modelem peÂ³nym ze wzglÃªdu na niewielkÂ¹ rÃ³Â¿nicÃª w wartoÅ“ci AUC.
 
 
 # 7 klasyfikator.
 
-# Ostatnim klasyfikatorem, jaki przetestujê, bêdzie klasyfikator z modelem opartym na funkcji ranger().
-# Zrobiê te¿ selekcjê zmiennych z liczb¹ zmiennych zwracanych równ¹ 12.
+# Ostatnim klasyfikatorem, jaki przetestujÃª, bÃªdzie klasyfikator z modelem opartym na funkcji ranger().
+# ZrobiÃª teÂ¿ selekcjÃª zmiennych z liczbÂ¹ zmiennych zwracanych rÃ³wnÂ¹ 12.
 
 train_set <- c(train_data, train_labels)
 
@@ -310,13 +310,13 @@ zbior_tren <- zbior_zloczony[idx_tren, ]
 
 zbior_test <- zbior_zloczony[-idx_tren, ]
 
-# Zrobiê selekcjê zmiennych funkcj¹ CMIM z pakietu "praznik".
+# ZrobiÃª selekcjÃª zmiennych funkcjÂ¹ CMIM z pakietu "praznik".
 
 library(praznik)
 
 y <- factor(ifelse(zbior_zloczony$poor == "Poor", 1, 0))
 
-# Wartoœci zmienner "poor" s¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
+# WartoÅ“ci zmienner "poor" sÂ¹ w ostatniej kolumnie zbioru "zbior_zlaczony", czyli 344.
 
 JMIM(zbior_zloczony[,-344], Y = y,  k = 12) # Dla walidacyjnego: cons_0111     cons_0901  geo_district     cons_0106     cons_0501 hld_nbcellpho
 # cons_0801     cons_0401   hld_cooking     cons_1204 hld_headsleep     cons_0803
