@@ -144,6 +144,7 @@ mean(predykcje_ranFor==zbior_test$poor) # Dla walidacyjnego: 0.7523333
 # Wczytywanie do pliku (ten plik wys³a³em mailem).
 write.table(wynik3, 'JZB.txt', append = FALSE, sep = "\n ", dec = ".",
             row.names = FALSE, col.names = FALSE)
+# W projekcie zaliczeniowym na studiach plik ten nazwalem 'JZB.txt', a nie 'Predykcje.txt'.
 
 # Dla walidacyjnego: AUC = 0.840. Lepiej jest ni¿ w przypadku 6 zmiennych. AUC jest mniejsze tylko o 0,02 ni¿ w przypadku modelu pe³nego.
 # Dla testowego: AUC = 
